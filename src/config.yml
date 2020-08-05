@@ -1,0 +1,3 @@
+inventories:
+   # maximum number of rows an inventory can have
+   max-size: 8

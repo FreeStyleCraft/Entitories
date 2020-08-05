@@ -1,0 +1,6 @@
+main: eu.freestylecraft.entitories.Entitories
+name: Entitories
+version: 1.0.0
+auhtors: [CraftKekser]
+api-version: 1.16
+depends: [JSON-Helper]

@@ -1,0 +1,27 @@
+default-menu:
+   # if set to false, this menu cannot be opened
+   enabled: true
+   # inventory name
+   title: 'Default Menu'
+   # size is measured in rows
+   size: 3
+   # fill all empty slots with this item, defined in items.yml
+   # leave empty ('') to disable placeholders for this menu
+   placeholder: 'default-placeholder'
+   # if set to true, players will be able to interact with other items in their while this menu is open
+   # this does not affect the items of the menu
+   allow-inventory-click: false
+   # if set to true, players can take items from this menu. Not recommended
+   items-takeable: false
+   # items of this menu
+   # the number represents the slot the item will appear in, starting from 1 in the top left corner
+   # for more infos about items, consult items.yml
+   items:
+      1:
+         material: 'BARRIER'
+         amount: 1
+         name: 'Close'
+         description: 'Closes this menu'
+         enchanted: false
+         action: 'close'
+   

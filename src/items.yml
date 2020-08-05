@@ -1,0 +1,23 @@
+default-placeholder:
+   # the material of the item
+   # must be a valid entry of the spigot Material enum
+   material: 'GRAY_STAINED_GLASS_PANE'
+   # the amount of the item
+   amount: 1
+   # the name of the item
+   # you can use color codes &a-f/0-9 and &#rrggbb
+   name: ''
+   # the description (lore) of the item
+   # you can use color codes &a-f/0-9 and &#rrggbb, separate lines with \n
+   description: ''
+   # if set to true, the item will be enchanted with unbreaking I to make it appear glowing
+   # the enchantment will not be visible in the item infos (hovering over it)
+   enchanted: false
+   # the action to be executed when a player clicks on the item
+   # to execute a command, use '/command arg1 arg2 argn'
+   #     you can use the following parameters in your command:
+   #     - {player} for the player that has clicked the item
+   #     - {menu} for the name of the current inventory
+   # to close the current menu, use 'close'
+   # no action at all: 'none' or ''
+   action: 'none'
