@@ -1,6 +1,15 @@
 package eu.freestylecraft.entitories.data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import eu.freestylecraft.entitories.util.ChatUtils;
 
 public class Item {
 
@@ -20,6 +29,29 @@ public class Item {
 		this.setDescription(description);
 		this.setEnchanted(enchanted);
 		this.setAction(action);
+	}
+	
+	/**
+	 * Generates an ItemStack instance from the item
+	 * @return the ItemStack
+	 */
+	public ItemStack asItemStack() {
+		ItemStack stack = new ItemStack(this.getMaterial(), this.getAmount());
+		ItemMeta meta = stack.getItemMeta();
+		meta.setDisplayName(ChatUtils.translate('&', this.getDisplayName()));
+		if(!this.getDescription().trim().isEmpty()) {
+			List<String> lore = new ArrayList<>();
+			for(String line : this.getDescription().split("\\n")) {
+				lore.add(ChatUtils.translate('&', line));
+			}
+			meta.setLore(lore);
+		}
+		stack.setItemMeta(meta);
+		if(this.isEnchanted()) {
+			stack.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+		}
+		stack.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
+		return stack;
 	}
 
 	/**

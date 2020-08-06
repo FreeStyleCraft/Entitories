@@ -2,6 +2,11 @@ package eu.freestylecraft.entitories.data;
 
 import java.util.HashMap;
 
+import org.bukkit.Bukkit;
+import org.bukkit.inventory.Inventory;
+
+import eu.freestylecraft.entitories.util.ChatUtils;
+
 public class Menu {
 
 	private String name;
@@ -21,6 +26,21 @@ public class Menu {
 		this.setAllowInventoryClick(allowInventoryClick);
 		this.setItemsTakeable(itemsTakeable);
 		this.setItems(items);
+	}
+	
+	public Inventory asInventory() {
+		Inventory inventory = Bukkit.createInventory(null, this.size, ChatUtils.translate('&', this.getTitle()));
+		// Set Placeholder
+		if(this.getPlaceholder() != null) {
+			inventory.all(this.getPlaceholder().asItemStack());
+		}
+		// Add items
+		for(int pos : this.getItems().keySet()) {
+			if(pos<=inventory.getSize()) { // to prevent "overflow"
+				inventory.setItem(pos-1, this.getItems().get(pos).asItemStack());
+			}
+		}
+		return inventory;
 	}
 
 	/**
