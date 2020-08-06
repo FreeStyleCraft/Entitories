@@ -13,7 +13,13 @@ public class Item {
 	private ItemAction action;
 	
 	public Item(Material material, int amount, String name, String displayName, String description, boolean enchanted, ItemAction action) {
-		
+		this.setMaterial(material);
+		this.setAmount(amount);
+		this.name = name;
+		this.setDisplayName(displayName);
+		this.setDescription(description);
+		this.setEnchanted(enchanted);
+		this.setAction(action);
 	}
 
 	/**
