@@ -38,11 +38,11 @@ public class Item {
 	public ItemStack asItemStack() {
 		ItemStack stack = new ItemStack(this.getMaterial(), this.getAmount());
 		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatUtils.translate('&', this.getDisplayName()));
+		meta.setDisplayName("§r§f" + ChatUtils.translate('&', this.getDisplayName()));
 		if(!this.getDescription().trim().isEmpty()) {
 			List<String> lore = new ArrayList<>();
-			for(String line : this.getDescription().split("\\n")) {
-				lore.add(ChatUtils.translate('&', line));
+			for(String line : this.getDescription().split("\\\\n")) {
+				lore.add("§r§7" + ChatUtils.translate('&', line));
 			}
 			meta.setLore(lore);
 		}

@@ -13,6 +13,8 @@ default-menu:
    allow-inventory-click: false
    # if set to true, players can take items from this menu. Not recommended
    items-takeable: false
+   # automatically close the inventory when an action has been executed
+   close-on-click: true
    # items of this menu
    # the number represents the slot the item will appear in, starting from 1 in the top left corner
    # for more infos about items, consult items.yml

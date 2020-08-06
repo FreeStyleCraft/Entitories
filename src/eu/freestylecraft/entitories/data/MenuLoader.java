@@ -33,10 +33,10 @@ public class MenuLoader {
 			this.storage.load(this.storageFile);
 
 			List<Menu> newCache = Collections.synchronizedList(new ArrayList<Menu>());
-			for(String name : storage.getKeys(true)) {
+			for(String name : storage.getKeys(false)) {
 				HashMap<Integer, Item> items = new HashMap<>();
 				ConfigurationSection itemsSection = storage.getConfigurationSection(name + ".items");
-				for(String position : itemsSection.getKeys(true)) {
+				for(String position : itemsSection.getKeys(false)) {
 					Material material = Material.valueOf(itemsSection.getString(position + ".material", "GRAY_STAINED_GLASS_PANE"));
 					material = material==null?Material.GRAY_STAINED_GLASS_PANE:material;
 					Item item = new Item(
@@ -50,13 +50,15 @@ public class MenuLoader {
 					items.put(Integer.valueOf(position), item);
 				}
 				Menu menu = new Menu(name, 
+						storage.getString(name + ".title", "Menü"),
 						storage.getBoolean(name + ".enabled", true), 
 						storage.getInt(name + ".size", 3), 
 						itemLoader.getItemByName(storage.getString(name + ".placeholder")), 
 						storage.getBoolean(name + ".allow-inventory-click", false), 
 						storage.getBoolean(name + ".items-takeable", false), 
+						storage.getBoolean(name + ".close-on-click", true),
 						items);
-				this.cache.add(menu);
+				newCache.add(menu);
 			}
 			this.cache.clear();
 			this.cache = newCache;

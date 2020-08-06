@@ -31,7 +31,7 @@ public class ItemLoader {
 			this.storage.load(this.storageFile);
 
 			List<Item> newCache = Collections.synchronizedList(new ArrayList<Item>());
-			for(String name : storage.getKeys(true)) {
+			for(String name : storage.getKeys(false)) {
 				Material material = Material.valueOf(storage.getString(name + ".material", "GRAY_STAINED_GLASS_PANE"));
 				material = material==null?Material.GRAY_STAINED_GLASS_PANE:material;
 				Item item = new Item(
@@ -46,13 +46,13 @@ public class ItemLoader {
 			}
 			this.cache.clear();
 			this.cache = newCache;
-			
+
 			return true;
 		} catch (IOException | InvalidConfigurationException e) {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Returns all currently loaded items
 	 * @return a list of all items
@@ -74,7 +74,7 @@ public class ItemLoader {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns an item by its name, but case-insensitive
 	 * @param name the name to search for

@@ -4,3 +4,16 @@ version: 1.0.0
 auhtors: [CraftKekser]
 api-version: 1.16
 depends: [JSON-Helper]
+
+commands:
+   entitories:
+      usage: /<command> <attach <menu>|detach>
+      description: Attaches/detaches a menu
+      
+permissions:
+   entitories.*:
+      children:
+      - entitories.attach: true
+      - entitories.detach: true
+      - entitories.list: true
+      - entitories.reload: true

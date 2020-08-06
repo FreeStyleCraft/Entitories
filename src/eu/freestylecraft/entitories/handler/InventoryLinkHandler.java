@@ -1,6 +1,5 @@
 package eu.freestylecraft.entitories.handler;
 
-import java.util.Collections;
 import java.util.HashMap;
 
 import org.bukkit.inventory.Inventory;
@@ -15,10 +14,10 @@ import org.bukkit.inventory.Inventory;
  */
 public class InventoryLinkHandler {
 
-	private HashMap<Inventory, String> inventoryNames;
+	private volatile HashMap<Inventory, String> inventoryNames;
 	
 	public InventoryLinkHandler() {
-		this.inventoryNames = (HashMap<Inventory, String>) Collections.synchronizedMap(new HashMap<Inventory, String>());
+		this.inventoryNames = new HashMap<Inventory, String>();
 	}
 	
 	public void setInventory(Inventory inventory, String menu) {
@@ -28,6 +27,14 @@ public class InventoryLinkHandler {
 	public void unsetInventory(Inventory inventory) {
 		if(this.inventoryNames.containsKey(inventory)) {
 			this.inventoryNames.remove(inventory);
+		}
+	}
+	
+	public String getMenu(Inventory inventory) {
+		if(this.inventoryNames.containsKey(inventory)) {
+			return this.inventoryNames.get(inventory);
+		}else {
+			return "";
 		}
 	}
 	

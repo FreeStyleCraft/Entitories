@@ -88,6 +88,28 @@ public class AttachmentLoader {
 			return false;
 		}
 	}
+	
+	/**
+	 * Removes an attachment
+	 * 
+	 * After removing the attachment from the cache, it is also removed directly from attachments.yml,
+	 * but in case the writing fails, all changes to the cache will be reverted.
+	 * 
+	 * @param attachment the attachment to remove
+	 * @return true if the attachment was removed and saved, false otherwise
+	 */
+	public boolean removeAttachment(EntityAttachment attachment) {
+		try {
+			this.cache.remove(attachment);
+			this.storage.set(attachment.getEntity().toString(), null);
+			this.storage.save(storageFile);
+			return true;
+		}catch(IOException ex) {
+			this.cache.add(attachment);
+			this.storage.set(attachment.getEntity().toString(), attachment.getMenu());
+			return false;
+		}
+	}
 
 	/**
 	 * Returns all currently loaded attachments
@@ -104,7 +126,7 @@ public class AttachmentLoader {
 	 */
 	public EntityAttachment getAttachmentByEntity(UUID entityUUID) {
 		for(EntityAttachment i : this.cache) {
-			if(i.getEntity() == entityUUID) {
+			if(i.getEntity().toString().equals(entityUUID.toString())) {
 				return i;
 			}
 		}
@@ -116,7 +138,7 @@ public class AttachmentLoader {
 	 * @param menu the menu name to search for
 	 * @return all attachments including the menu
 	 */
-	public List<EntityAttachment> getAttachmentByEntity(String menu) {
+	public List<EntityAttachment> getAttachmentByMenu(String menu) {
 		List<EntityAttachment> attachments = new ArrayList<>();
 		for(EntityAttachment i : this.cache) {
 			if(i.getMenu().equals(menu)) {

@@ -16,15 +16,18 @@ public class Menu {
 	private Item placeholder;
 	private boolean allowInventoryClick;
 	private boolean itemsTakeable;
+	private boolean closeOnClick;
 	private HashMap<Integer, Item> items;
 
-	public Menu(String name, boolean enabled, int size, Item placeholder, boolean allowInventoryClick, boolean itemsTakeable, HashMap<Integer, Item> items) {
+	public Menu(String name, String title, boolean enabled, int size, Item placeholder, boolean allowInventoryClick, boolean itemsTakeable, boolean closeOnClick, HashMap<Integer, Item> items) {
 		this.name = name;
+		this.setTitle(title);
 		this.setEnabled(enabled);
 		this.setSize(size);
 		this.setPlaceholder(placeholder);
 		this.setAllowInventoryClick(allowInventoryClick);
 		this.setItemsTakeable(itemsTakeable);
+		this.setCloseOnClick(closeOnClick);
 		this.setItems(items);
 	}
 	
@@ -32,7 +35,9 @@ public class Menu {
 		Inventory inventory = Bukkit.createInventory(null, this.size, ChatUtils.translate('&', this.getTitle()));
 		// Set Placeholder
 		if(this.getPlaceholder() != null) {
-			inventory.all(this.getPlaceholder().asItemStack());
+			for(int i = 0; i < inventory.getSize(); i++) {
+				inventory.setItem(i, this.getPlaceholder().asItemStack());
+			}
 		}
 		// Add items
 		for(int pos : this.getItems().keySet()) {
@@ -140,6 +145,22 @@ public class Menu {
 	}
 
 	/**
+	 * Returns whether to close the menu automatically after executing an action
+	 * @return whether to close the menu automatically after executing an action
+	 */
+	public boolean isCloseOnClick() {
+		return closeOnClick;
+	}
+
+	/**
+	 * Sets whether to close the menu automatically after executing an action
+	 * @param closeOnClick true to automatically close the menu
+	 */
+	public void setCloseOnClick(boolean closeOnClick) {
+		this.closeOnClick = closeOnClick;
+	}
+
+	/**
 	 * Returns a map containing the content of the menu
 	 * as slot number (counting from 1) - item at that position
 	 * @return the content
@@ -174,5 +195,6 @@ public class Menu {
 		if(this.items.containsKey(position))
 			this.items.remove(position);
 	}
+
 
 }
