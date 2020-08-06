@@ -4,12 +4,24 @@ public class ItemAction {
 
 	private ItemActionType type;
 	private String command;
-	
+
 	public ItemAction(ItemActionType type, String command) {
 		this.setType(type);
 		this.setCommand(command);
 	}
-	
+
+	public static ItemAction parse(String action) {
+		if(action.startsWith("$/")) {
+			return new ItemAction(ItemActionType.SERVER_COMMAND, action.replaceFirst("\\$\\/", ""));
+		}else if(action.startsWith("/")) {
+			return new ItemAction(ItemActionType.COMMAND, action.replaceFirst("\\/", ""));
+		}else if(action.equalsIgnoreCase("none")||action.trim().isEmpty()) {
+			return new ItemAction(ItemActionType.NONE, "");
+		}else {
+			return new ItemAction(ItemActionType.MENU_CONTROL, action);
+		}
+	}
+
 	/**
 	 * @return the type
 	 */
@@ -57,5 +69,5 @@ public class ItemAction {
 		 */
 		NONE;
 	}
-	
+
 }

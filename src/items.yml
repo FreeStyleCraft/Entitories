@@ -14,7 +14,7 @@ default-placeholder:
    # the enchantment will not be visible in the item infos (hovering over it)
    enchanted: false
    # the action to be executed when a player clicks on the item
-   # to execute a command, use '/command arg1 arg2 argn'
+   # to execute a command, use '/command arg1 arg2 argn' or '$/command ...' for console commands
    #     you can use the following parameters in your command:
    #     - {player} for the player that has clicked the item
    #     - {menu} for the name of the current inventory
