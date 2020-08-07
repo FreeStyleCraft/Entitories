@@ -32,8 +32,11 @@ public class ItemLoader {
 
 			List<Item> newCache = Collections.synchronizedList(new ArrayList<Item>());
 			for(String name : storage.getKeys(false)) {
-				Material material = Material.valueOf(storage.getString(name + ".material", "GRAY_STAINED_GLASS_PANE"));
-				material = material==null?Material.GRAY_STAINED_GLASS_PANE:material;
+				String matname = storage.getString(name + ".material", "RED_STAINED_GLASS_PANE");
+				Material material = Material.getMaterial(matname);
+				if(material == null) {
+					material = Material.RED_STAINED_GLASS_PANE;
+				}
 				Item item = new Item(
 						material, 
 						storage.getInt(name + ".amount", 1), 
@@ -41,6 +44,7 @@ public class ItemLoader {
 						storage.getString(name + ".name", "???"), 
 						storage.getString(name + ".description", ""), 
 						storage.getBoolean(name + ".enchanted", false), 
+						storage.getBoolean(name + ".close-on-click", false), 
 						ItemAction.parse(storage.getString(name + ".action", "none")));
 				newCache.add(item);
 			}

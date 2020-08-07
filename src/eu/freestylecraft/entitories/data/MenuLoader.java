@@ -37,25 +37,34 @@ public class MenuLoader {
 				HashMap<Integer, Item> items = new HashMap<>();
 				ConfigurationSection itemsSection = storage.getConfigurationSection(name + ".items");
 				for(String position : itemsSection.getKeys(false)) {
-					Material material = Material.valueOf(itemsSection.getString(position + ".material", "GRAY_STAINED_GLASS_PANE"));
-					material = material==null?Material.GRAY_STAINED_GLASS_PANE:material;
-					Item item = new Item(
-							material, 
-							itemsSection.getInt(position + ".amount", 1), 
-							"itm"+String.valueOf(new Random().nextInt(9999) + 1000), 
-							itemsSection.getString(position + ".name", "???"), 
-							itemsSection.getString(position + ".description", ""), 
-							itemsSection.getBoolean(position + ".enchanted", false), 
-							ItemAction.parse(itemsSection.getString(position + ".action", "none")));
-					items.put(Integer.valueOf(position), item);
+					if(itemsSection.isString(position)) {
+						Item item;
+						if((item = itemLoader.getItemByName(itemsSection.getString(position)))!=null)
+							items.put(Integer.valueOf(position), item);
+					}else {
+						String matname = itemsSection.getString(position + ".material", "RED_STAINED_GLASS_PANE");
+						Material material = Material.getMaterial(matname);
+						if(material == null) {
+							material = Material.RED_STAINED_GLASS_PANE;
+						}
+						Item item = new Item(
+								material, 
+								itemsSection.getInt(position + ".amount", 1), 
+								"itm"+String.valueOf(new Random().nextInt(9999) + 1000), 
+								itemsSection.getString(position + ".name", "???"), 
+								itemsSection.getString(position + ".description", ""), 
+								itemsSection.getBoolean(position + ".enchanted", false), 
+								itemsSection.getBoolean(position + ".close-on-click", false), 
+								ItemAction.parse(itemsSection.getString(position + ".action", "none")));
+						items.put(Integer.valueOf(position), item);
+					}
 				}
 				Menu menu = new Menu(name, 
 						storage.getString(name + ".title", "Menü"),
 						storage.getBoolean(name + ".enabled", true), 
 						storage.getInt(name + ".size", 3), 
 						itemLoader.getItemByName(storage.getString(name + ".placeholder")), 
-						storage.getBoolean(name + ".allow-inventory-click", false), 
-						storage.getBoolean(name + ".items-takeable", false), 
+						storage.getBoolean(name + ".allow-inventory-click", false),
 						storage.getBoolean(name + ".close-on-click", true),
 						items);
 				newCache.add(menu);

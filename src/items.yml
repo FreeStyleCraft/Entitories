@@ -21,3 +21,5 @@ default-placeholder:
    # to close the current menu, use 'close'
    # no action at all: 'none' or ''
    action: 'none'
+   # automatically close the inventory when the action has been executed. This setting will be prioritized if set to true
+   close-on-click: false

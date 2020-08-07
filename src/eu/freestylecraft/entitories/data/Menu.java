@@ -15,18 +15,16 @@ public class Menu {
 	private int size;
 	private Item placeholder;
 	private boolean allowInventoryClick;
-	private boolean itemsTakeable;
 	private boolean closeOnClick;
 	private HashMap<Integer, Item> items;
 
-	public Menu(String name, String title, boolean enabled, int size, Item placeholder, boolean allowInventoryClick, boolean itemsTakeable, boolean closeOnClick, HashMap<Integer, Item> items) {
+	public Menu(String name, String title, boolean enabled, int size, Item placeholder, boolean allowInventoryClick, boolean closeOnClick, HashMap<Integer, Item> items) {
 		this.name = name;
 		this.setTitle(title);
 		this.setEnabled(enabled);
 		this.setSize(size);
 		this.setPlaceholder(placeholder);
 		this.setAllowInventoryClick(allowInventoryClick);
-		this.setItemsTakeable(itemsTakeable);
 		this.setCloseOnClick(closeOnClick);
 		this.setItems(items);
 	}
@@ -126,22 +124,6 @@ public class Menu {
 	 */
 	public void setAllowInventoryClick(boolean allowInventoryClick) {
 		this.allowInventoryClick = allowInventoryClick;
-	}
-
-	/**
-	 * Returns whether items can be taken out of the menu
-	 * @return whether items can be taken out of the menu
-	 */
-	public boolean areItemsTakeable() {
-		return itemsTakeable;
-	}
-
-	/**
-	 * Sets whether items can be taken out if the menu
-	 * @param itemsTakeable true to allow players to take items
-	 */
-	public void setItemsTakeable(boolean itemsTakeable) {
-		this.itemsTakeable = itemsTakeable;
 	}
 
 	/**

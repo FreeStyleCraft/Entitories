@@ -74,21 +74,27 @@ public class AttachmentLoader {
 	 * @return true if the attachment was added and saved, false otherwise
 	 */
 	public boolean addAttachment(EntityAttachment attachment) {
-		boolean contained = this.cache.contains(attachment);
+		EntityAttachment previous = getAttachmentByEntity(attachment.getEntity());
 		try {
+			if(previous!=null) {
+				this.cache.remove(previous);
+				this.storage.set(previous.getEntity().toString(), null);
+			}
 			this.cache.add(attachment);
 			this.storage.set(attachment.getEntity().toString(), attachment.getMenu());
 			this.storage.save(this.storageFile);
 			return true;
 		}catch(IOException ex) {
-			if(!contained) {
+			if(previous!=null) {
 				this.cache.remove(attachment);
 				this.storage.set(attachment.getEntity().toString(), null);
+				this.cache.add(previous);
+				this.storage.set(previous.getEntity().toString(), previous.getMenu());
 			}
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Removes an attachment
 	 * 

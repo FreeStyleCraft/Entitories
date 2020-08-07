@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.Inventory;
 
 import eu.freestylecraft.entitories.Entitories;
@@ -20,7 +20,7 @@ public class EntityInteractListener implements Listener {
 	}
 	
 	@EventHandler
-	public void onEntityClick(PlayerInteractAtEntityEvent e) {
+	public void onEntityClick(PlayerInteractEntityEvent e) {
 		UUID entityUUID = e.getRightClicked().getUniqueId();
 		EntityAttachment attachment;
 		if((attachment=this.plugin.attachmentLoader.getAttachmentByEntity(entityUUID))!=null) {
@@ -30,6 +30,7 @@ public class EntityInteractListener implements Listener {
 					Inventory inventory = menu.asInventory();
 					e.getPlayer().openInventory(inventory);
 					this.plugin.linkHandler.setInventory(inventory, menu.getName());
+					e.setCancelled(true);
 				}
 			}
 		}

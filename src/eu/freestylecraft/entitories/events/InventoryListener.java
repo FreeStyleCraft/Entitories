@@ -1,10 +1,8 @@
 package eu.freestylecraft.entitories.events;
 
-import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
@@ -61,6 +59,9 @@ public class InventoryListener implements Listener {
 						if(action.getType() != ItemActionType.NONE && menu.isCloseOnClick()) {
 							e.getWhoClicked().closeInventory();
 						}
+						if(action.getType() != ItemActionType.NONE && clicked.isCloseOnClick()) {
+							e.getWhoClicked().closeInventory();
+						}
 					}
 				}else if(menu.getPlaceholder() != null) {
 					Item clicked = menu.getPlaceholder();
@@ -87,19 +88,14 @@ public class InventoryListener implements Listener {
 						if(action.getType() != ItemActionType.NONE && menu.isCloseOnClick()) {
 							e.getWhoClicked().closeInventory();
 						}
+						if(action.getType() != ItemActionType.NONE && clicked.isCloseOnClick()) {
+							e.getWhoClicked().closeInventory();
+						}
 					}
 				}
-				if(!menu.areItemsTakeable() && (
-						e.getAction() == InventoryAction.CLONE_STACK
-						|| e.getAction() == InventoryAction.COLLECT_TO_CURSOR
-						|| e.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY
-						|| e.getAction() == InventoryAction.PICKUP_SOME
-						|| e.getAction() == InventoryAction.SWAP_WITH_CURSOR)) {
-					e.setResult(Result.DENY);
-				}
-
-				if(!menu.isAllowInventoryClick() && !menu.areItemsTakeable()) {
-					e.setResult(Result.DENY);
+				
+				if(!menu.isAllowInventoryClick()) {
+					e.setCancelled(true);
 				}
 			}
 		}

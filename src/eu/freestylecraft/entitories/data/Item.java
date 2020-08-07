@@ -19,15 +19,17 @@ public class Item {
 	private String displayName;
 	private String description;
 	private boolean enchanted;
+	private boolean closeOnClick;
 	private ItemAction action;
 	
-	public Item(Material material, int amount, String name, String displayName, String description, boolean enchanted, ItemAction action) {
+	public Item(Material material, int amount, String name, String displayName, String description, boolean enchanted, boolean closeOnClick, ItemAction action) {
 		this.setMaterial(material);
 		this.setAmount(amount);
 		this.name = name;
 		this.setDisplayName(displayName);
 		this.setDescription(description);
 		this.setEnchanted(enchanted);
+		this.setCloseOnClick(closeOnClick);
 		this.setAction(action);
 	}
 	
@@ -142,6 +144,20 @@ public class Item {
 	 */
 	public void setEnchanted(boolean enchanted) {
 		this.enchanted = enchanted;
+	}
+
+	/**
+	 * @return the closeOnClick
+	 */
+	public boolean isCloseOnClick() {
+		return closeOnClick;
+	}
+
+	/**
+	 * @param closeOnClick the closeOnClick to set
+	 */
+	public void setCloseOnClick(boolean closeOnClick) {
+		this.closeOnClick = closeOnClick;
 	}
 
 	/**
