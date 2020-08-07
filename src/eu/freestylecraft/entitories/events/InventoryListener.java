@@ -46,9 +46,24 @@ public class InventoryListener implements Listener {
 							this.plugin.getServer().dispatchCommand(this.plugin.getServer().getConsoleSender(), action.getCommand().replace("{player}", e.getWhoClicked().getName()).replace("{menu}", menu.getName()));
 							break;
 						case MENU_CONTROL:
-							switch(action.getCommand().toLowerCase()) {
+							String[] input = action.getCommand().toLowerCase().split("\\s");
+							switch(input[0].toLowerCase()) {
 							case "close":
 								e.getWhoClicked().closeInventory();
+								break;
+							case "menu":
+								if(input.length>1) {
+									Menu otherMenu;
+									if((otherMenu=this.plugin.menuLoader.getMenuByName(input[1]))!=null) {
+										if(otherMenu.isEnabled()) {
+											e.getWhoClicked().closeInventory();
+											this.plugin.linkHandler.unsetInventory(inventory);
+											Inventory otherIinventory = otherMenu.asInventory();
+											e.getWhoClicked().openInventory(otherIinventory);
+											this.plugin.linkHandler.setInventory(otherIinventory, otherMenu.getName());
+										}
+									}
+								}
 								break;
 							}
 							break;
